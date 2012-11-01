@@ -1,0 +1,17 @@
+﻿@model MusicStore.Models.Album
+
+@{
+    ViewBag.Title = "ModifiedEdit";
+}
+
+<h2>ModifiedEdit</h2>
+@using (Html.BeginForm())
+{
+    @Html.DropDownList("GenreId", string.Empty)
+    @Html.EditorFor(model => model.Title)
+    @Html.EditorFor(model => model.Price)
+    
+    <p>
+        <input type="submit" value="save" />
+    </p>
+}
