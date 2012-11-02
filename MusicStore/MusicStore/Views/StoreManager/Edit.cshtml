@@ -6,6 +6,9 @@
 
 <h2>Edit</h2>
 
+<span>@Url.Action("Index", "StoreManager", new { genre ="Jazz"}, null)</span>
+<br/>
+    <span>@Url.Content("~/Scripts/jquery-1.7.1.js")</span>
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 

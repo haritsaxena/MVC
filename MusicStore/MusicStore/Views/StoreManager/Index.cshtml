@@ -5,10 +5,18 @@
 }
 
 <h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<script src="~/Scripts/jquery-1.7.1.js" ></script>
+<script type="text/javascript">
+    $(function () {
+        $("NewItem").mouseover(function () {
+            $(this).animate({ height: '+=125', width: '+=125' })
+                .animate({ height: '-=125', width: '-=125' });
+        });
+    });
+</script>
+<div id="NewItem">
+        @Html.ActionLink("Create New", "Create")
+</div>
 <table>
     <tr>
         <th>

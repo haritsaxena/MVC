@@ -73,8 +73,19 @@ namespace MusicStore.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.GenreId = new SelectList(db.Genres, "GenreId", "Name", album.GenreId);
-            ViewBag.ArtistId = new SelectList(db.Artists, "ArtistId", "Name", album.ArtistId);
+            // ViewBag.GenreId = new SelectList(db.Genres.OrderBy(g => g.Name), "GenreId", "Name", album.GenreId);
+
+            ViewBag.GenreId =
+                this.db.Genres.OrderBy(g => g.Name).AsEnumerable().Select(
+                    g =>
+                    new SelectListItem
+                        {
+                            Text = g.Name, 
+                            Value = g.GenreId.ToString(), 
+                            Selected = album.GenreId == g.GenreId 
+                        });
+
+            this.ViewBag.ArtistId = new SelectList(this.db.Artists, "ArtistId", "Name", album.ArtistId);
             return View(album);
             //return View("ModifiedEdit", album);
         }
