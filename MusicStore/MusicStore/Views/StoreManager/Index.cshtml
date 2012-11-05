@@ -3,20 +3,16 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>Index</h2>
-<script src="~/Scripts/jquery-1.7.1.js" ></script>
-<script type="text/javascript">
-    $(function () {
-        $("NewItem").mouseover(function () {
-            $(this).animate({ height: '+=125', width: '+=125' })
-                .animate({ height: '-=125', width: '-=125' });
-        });
-    });
-</script>
-<div id="NewItem">
-        @Html.ActionLink("Create New", "Create")
-</div>
+<input id="autocomplete" type="text" name="q" data-autocomplete-source="@Url.Action("QuickSearch", "StoreManager")" />
+
+
+<p id="NewItem" style="background:#98bf21;height:100px;width:100px;position:absolute;">
+    @Html.ActionLink("Create New", "Create")
+</p>
+@section Scripts {
+    <script src="~/Scripts/MusicScripts.js"></script>
+}
 <table>
     <tr>
         <th>
@@ -37,29 +33,30 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Artist.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AlbumArtUrl)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AlbumId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AlbumId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AlbumId })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlbumArtUrl)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.AlbumId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.AlbumId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.AlbumId })
+            </td>
+        </tr>
+    }
 </table>
+
+

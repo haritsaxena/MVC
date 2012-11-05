@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using MusicStore.Models;
 
+
 namespace MusicStore.Controllers
 {
     public class StoreManagerController : Controller
@@ -151,6 +152,48 @@ namespace MusicStore.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+
+        public ActionResult QuickSearch(string term)
+        {
+            var artists = GetArtists(term).Select(a => new { value = a.Name });
+            return Json(artists, JsonRequestBehavior.AllowGet);
+        }
+        private List<Artist> GetArtists(string searchString)
+        {
+            return db.Artists.Where(a => a.Name.Contains(searchString)).ToList();
+        }
+
+
+        public ActionResult All()
+        {
+            return View();
+        }
+
+        public JsonResult AllAlbums()
+        {
+            var albums = new List<Album>()
+                             {
+                                 new Album() {AlbumId = 1, Title = "Asd", Price = (decimal) 23.22 },
+                                 new Album() {AlbumId = 2, Title = "efg", Price = (decimal) 177.22}
+                             };
+
+            var productQuery = from prod in albums select new {prod.AlbumId, prod.Title, prod.Price };
+
+            //// http://josephschrag.blogspot.in/2012/02/using-jqgrid-with-jsonresult.html
+            //// http://www.codeproject.com/Articles/424640/ASP-NET-MVC-HTML-Helper-for-the-jqGrid
+            var results = new
+            {
+                total = 1, //number of pages
+                page = 1, //current page
+                records = 2, //total items
+                rows = productQuery
+            };
+            //var albums = db.Albums.Include(a => a.Genre).Include(a => a.Artist);
+            return Json(results, JsonRequestBehavior.AllowGet);
+
+            
         }
     }
 }
